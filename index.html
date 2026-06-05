@@ -423,7 +423,17 @@ footer{border-top:1px solid var(--border);padding:10px 24px;font-family:var(--mo
   <div id="ft"></div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+function askSecBtn(el){
+  var n=el.getAttribute("data-sec");
+  prefill("Analyze the "+n+" sector on June 5 2026 and what investors should know.");
+}
+function askTickBtn(el){
+  var n=el.getAttribute("data-name");
+  var t=el.getAttribute("data-tick");
+  prefill("Tell me about "+n+" ("+t+") performance on June 5 2026 and what investors should know.");
+}
+</script>
 <script>
 // CLOCK
 function tick(){
@@ -530,7 +540,7 @@ function buildSectors(){
     var w=Math.round(Math.abs(s.y)/mx*100);
     var lbl=s.s==="bull"?"OVERWEIGHT":(s.s==="bear"?"UNDERWEIGHT":"NEUTRAL");
     var nm=s.n.replace(/'/g,"");
-    h+='<div class="sc '+s.s+'" onclick="prefill(\'Analyze the '+nm+' sector on June 5 2026\')">';
+    h+='<div class="sc '+s.s+'" data-sec="'+nm+'" onclick="askSecBtn(this)">';
     h+='<div class="sc-n">'+s.n+'</div>';
     h+='<div class="sc-p" style="color:'+col+'">'+sign+s.y.toFixed(1)+'%</div>';
     h+='<div class="sc-b"><div class="sc-f" style="width:'+w+'%;background:'+col+'"></div></div>';
@@ -568,7 +578,7 @@ function renderEq(){
     var e=rows[i];
     var chgCol=e.c.charAt(0)==="+"?"var(--green)":"var(--red)";
     var sl=e.s==="bull"?"HOLDING UP":(e.s==="bear"?"RISK":"WATCH");
-    h+='<tr onclick="prefill(\'Tell me about '+e.n+' ('+e.t+') performance on June 5 2026 and what investors should know\')">';
+    h+='<tr data-name="'+e.n+'" data-tick="'+e.t+'" onclick="askTickBtn(this)">';
     h+='<td class="tt">'+e.t+'</td>';
     h+='<td class="tn">'+e.n+'</td>';
     h+='<td style="color:var(--text3);font-size:11px">'+e.sec.toUpperCase()+'</td>';
